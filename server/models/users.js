@@ -1,17 +1,19 @@
-//To create a database User Schema from mongoose
+import mongoose from 'mongoose'
 
-const mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-const userSchema = new mongoose.Schema({
-  username: String,
-  email: String,
-  role: String,
-  vehicleNumber: String,
-
-  // ...other fields
+var Users = new Schema({
+firstName: String, //The first name of the staff member or student.
+lastName: String, //The last name of the staff member or student.
+email: String, //The email address of the staff member or student.
+role: String, //Indicates whether the entry is for a staff member or a student (e.g., 'Staff' or 'Student').
+department: String, //The department or major of the individual (for students, it could be their academic major, and for staff, it could be their department within the college).
+employeeStudentId: String, //A unique identifier for employees or students, respectively.
+phoneNumber: String, //The contact phone number of the individual.
+registrationDate: String //The date when the individual registered with the college.
 });
 
-// Define the model for the User collection
-const User = mongoose.model('User', userSchema);
+module.exports = mongoose.model('users', Users);
 
-module.exports = User
+
+
