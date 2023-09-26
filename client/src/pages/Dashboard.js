@@ -1,6 +1,20 @@
-import './Dashboard.css'
+import './Dashboard.css';
+import React, { useState, useEffect } from 'react';
+
+
 
 export const Dashboard = () => {
+    const [ vehicleData, setVehicleData ] = useState([]);
+    useEffect(() => {
+        // Fetch vehicle data
+        fetch('YOUR_API_URL_HERE')
+            .then(response => response.json())
+            .then(data => {
+                setVehicleData(data); // check for return object 
+            })
+            .catch(error => console.error('Error fetching vehicle data:', error));
+    }, []);
+
     return (
         <>
             <div className="container">
@@ -12,36 +26,22 @@ export const Dashboard = () => {
                         <div className="table-content">
                             <table>
                                 <thead>
-                                <tr>
-                                    <th>Car Number</th>
-                                    <th>Category</th>
-                                </tr>
+                                    <tr>
+                                        <th>Car Number</th>
+                                        <th>Category</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>PBO2A0001</td>
-                                    <td>Faculty</td>
-                                </tr>
-                                <tr>
-                                    <td>PBO2A0001</td>
-                                    <td>Faculty</td>
-                                </tr>
-                                <tr>
-                                    <td>PBO2A0001</td>
-                                    <td>Faculty</td>
-                                </tr>
-                                <tr>
-                                    <td>PBO2A0001</td>
-                                    <td>Faculty</td>
-                                </tr>
-                                <tr>
-                                    <td>PBO2A0001</td>
-                                    <td>Faculty</td>
-                                </tr>
-                                <tr>
-                                    <td>PBO2A0001</td>
-                                    <td className="un-auth">UnAuthorized</td>
-                                </tr>
+                                    {
+                                        vehicleData.map((vehicle, index) => {
+                                            <tr key={ index }>
+                                                <td>{ vehicle.vehicleNo }</td>
+                                                <td className={ !vehicle.db_match ? 'un-auth' : '' }>
+                                                    { vehicle.category }
+                                                </td>
+                                            </tr>;
+                                        })
+                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -51,42 +51,17 @@ export const Dashboard = () => {
                             <span>Recent Unauthorized entries</span>
                         </div>
                         <div className="card-grid">
-                            <div className="card-item">
-                                <span className="carNumber">PB02A0001</span>
-                                <span className="parkingLot">R&D Block</span>
-                            </div>
-                            <div className="card-item">
-                                <span className="carNumber">PB02A0001</span>
-                                <span className="parkingLot">R&D Block</span>
-                            </div>
-                            <div className="card-item">
-                                <span className="carNumber">PB02A0001</span>
-                                <span className="parkingLot">R&D Block</span>
-                            </div>
-                            <div className="card-item">
-                                <span className="carNumber">PB02A0001</span>
-                                <span className="parkingLot">R&D Block</span>
-                            </div>
-                            <div className="card-item">
-                                <span className="carNumber">PB02A0001</span>
-                                <span className="parkingLot">R&D Block</span>
-                            </div>
-                            <div className="card-item">
-                                <span className="carNumber">PB02A0001</span>
-                                <span className="parkingLot">R&D Block</span>
-                            </div>
-                            <div className="card-item">
-                                <span className="carNumber">PB02A0001</span>
-                                <span className="parkingLot">R&D Block</span>
-                            </div>
-                            <div className="card-item">
-                                <span className="carNumber">PB02A0001</span>
-                                <span className="parkingLot">R&D Block</span>
-                            </div>
+                            {
+                                vehicleData.filter(vehicle => !vehicle.db_match).map((vehicle, index) => {
+                                    <div className="card-item" key={ index }>
+                                        <span className="carNumber">{ vehicle.vehicleNo }</span>
+                                    </div>;
+                                })
+                            }
                         </div>
                     </div>
                 </div>
             </div>
         </>
-    )
-}
+    );
+};
