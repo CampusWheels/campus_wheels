@@ -1,16 +1,8 @@
 import connectDB from './db.js'
-// import db from './db'
-
 import express from 'express'
 import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
 import dotenv from 'dotenv'
-
-// const express = require("express")
-// const mongoose = require("mongoose")
-// const bodyParser = require("body-parser")
-// const dotenv = require("dotenv")
-
 
 // Load environment variables from .env file
 dotenv.config();
