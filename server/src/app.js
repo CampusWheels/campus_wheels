@@ -4,8 +4,10 @@ import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
 import dotenv from 'dotenv'
 import VehicleEvent from './models/vehicleEvent.js'
-import users from './models/users.js'
+import Users from './models/users.js'
 import vehicles from './models/vehicle.js'
+import vehicleDetailRoute from './api/routes/vehicleDetailsRoute.js'
+import vehicleRecieveRoute from './api/routes/vehicleRecieveRoute.js'
 
 // Load environment variables from .env file
 dotenv.config();
@@ -29,9 +31,10 @@ app.get("/", (req, res) => {
 
 app.get('/users', async (req, res) => {
   try{
-    const users = new users(req.body);
-    await users.save();
-    res.status(200).json({ message: 'User Retrieved'});
+    const users = await Users.find();
+    console.log(users)
+
+    res.json(users).status(200ad)
   }catch(error) {
     console.error(error);
     res.status(500).json({ error: error.toString() });
@@ -39,13 +42,26 @@ app.get('/users', async (req, res) => {
 });
 
 
+// app.use('/vehicles', vehicleDetailRoute);
+
+// app.use('/receive-vehicle-event', vehicleRecieveRoute);
+
+app.get('/vehicles', async (req, res) => {
+  try{
+      const vehicle = await vehicles.find();
+      console.log(vehicle)
+      res.json(vehicle)
+  }catch(error){
+      res.status(500).json({ message: error.message});
+  }
+});
 
 app.post('/receive-vehicle-event', async (req, res) => {
   try {
 
       const data = req.body;
       const vehicleEventData = req.body;
-      console.log(vehicleEventData);
+      // console.log(vehicleEventData);
 
       const eventTimestamp = data.info.event_timestamp;
       const formattedTime = converToUtc(eventTimestamp)
@@ -53,22 +69,22 @@ app.post('/receive-vehicle-event', async (req, res) => {
 
       const eventDirection = data.event.direction;
       const vehicleType = data.event.vehicle_category.type;
+      console.log(vehicleType, typeof(vehicleType));
       const matchedLP = data.event.matched_lp;
       const dbMatch = data.event.db_match;
       const images = data.base64_images;
 
       // Creating a new object with the extracted data
       const vehicleData = {
-        num: matchedLP,
         type: vehicleType,
-        // ownerRole: "", // Assign the appropriate value here
-        // validity: "", // Assign the appropriate value here
         time_stamp: formattedTime,
         direction: eventDirection,
         matchedLp: matchedLP,
         dbMatch: dbMatch.toString(), // Convert the array to a string
         images: images
       };
+
+      console.log(vehicleData);
 
       //Create a new instance of the VechicleEvent model and save it to the database
       const vehicleEvent = new VehicleEvent(vehicleEventData);
