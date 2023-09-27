@@ -34,7 +34,7 @@ app.get('/users', async (req, res) => {
     const users = await Users.find();
     console.log(users)
 
-    res.json(users).status(200ad)
+    res.json(users).status(200)
   }catch(error) {
     console.error(error);
     res.status(500).json({ error: error.toString() });
