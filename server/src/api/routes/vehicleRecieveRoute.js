@@ -1,12 +1,13 @@
 import express from 'express'
 import VehicleEvent from '../../models/vehicleEvent.js'
-import vehicles from '../../models/vehicle.js'
+import Vehicles from '../../models/vehicle.js'
 
 const router = express.Router();
+console.log("Inside Vehicle Recieve route");
 
 router.post('/receive-vehicle-event', async (req, res) => {
     try {
-        const data = req.body;
+      const data = req.body;
       const vehicleEventData = req.body;
       // console.log(vehicleEventData);
 
@@ -38,14 +39,18 @@ router.post('/receive-vehicle-event', async (req, res) => {
       await vehicleEvent.save();
 
       //Create a new instance of vehicle model and save it to the database
-      const vehicle = new vehicles(vehicleData)
-      await vehicle.save()
+      const vehicles = new Vehicles(vehicleData)
+      await vehicles.save()
 
-      res.status(200).json({ message: 'Data stored successfully!' });
+      res.send("Got the Vehicle Data").status(200).json({ message: 'Data stored successfully!' });
     }catch(error){
         console.error(error);
         res.status(202).json({ error: error.toString() });
     }
-})
+});
+
+router.get('/receive-vehicle-event', async (req, res) =>{
+  res.send("You are in the recieve-vehicle-event Route");
+});
 
 export default router
