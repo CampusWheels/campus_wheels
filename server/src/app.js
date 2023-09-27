@@ -36,9 +36,3 @@ app.listen(PORT, () => {
   console.log(`Server is running on port http://localhost:${PORT}/`);
 });
 
-function converToUtc(utc){
-  let dateObj = new Date(utc*1000);
-  let utcString = dateObj.toUTCString();
-  let time = utcString.slice(-11, -4);
-  return time;
-}

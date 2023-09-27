@@ -42,7 +42,7 @@ router.post('/receive-vehicle-event', async (req, res) => {
       const vehicles = new Vehicles(vehicleData)
       await vehicles.save()
 
-      res.send("Got the Vehicle Data").status(200).json({ message: 'Data stored successfully!' });
+      res.status(200).json({ message: 'Data stored successfully!' });
     }catch(error){
         console.error(error);
         res.status(202).json({ error: error.toString() });
@@ -52,5 +52,14 @@ router.post('/receive-vehicle-event', async (req, res) => {
 router.get('/receive-vehicle-event', async (req, res) =>{
   res.send("You are in the recieve-vehicle-event Route");
 });
+
+
+function converToUtc(utc){
+  let dateObj = new Date(utc*1000);
+  let utcString = dateObj.toUTCString();
+  let time = utcString.slice(-11, -4);
+  return time;
+}
+
 
 export default router
