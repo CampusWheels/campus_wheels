@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 var Schema = mongoose.Schema;
 
-var UsersSchema = new Schema({
+var VisitorsSchema = new Schema({
 firstName: String, //The first name of the staff member or student.
 lastName: String, //The last name of the staff member or student.
 email: String, //The email address of the staff member or student.
@@ -14,6 +14,6 @@ registrationDate: String, //The date when the individual registered with the col
 govtId: String //Aadhar number of the person
 });
 
-const Users = mongoose.model('users', UsersSchema);
-export default Users
+const visitor = mongoose.model('visitors', VisitorsSchema);
+export default visitor
 
