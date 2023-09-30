@@ -1,6 +1,7 @@
 import express from 'express'
 import VehicleEvent from '../../models/vehicleEvent.js'
 import Vehicles from '../../models/vehicle.js'
+import UnregisteredVehicle from '../../models/unregisteredVehicle.js';
 
 const router = express.Router();
 console.log("Inside Vehicle Recieve route");
@@ -17,32 +18,41 @@ router.post('/receive-vehicle-event', async (req, res) => {
 
       const eventDirection = data.event.direction;
       const vehicleType = data.event.vehicle_category.type;
-      console.log(vehicleType, typeof(vehicleType));
       const matchedLP = data.event.matched_lp;
       const dbMatch = data.event.db_match;
       const images = data.base64_images;
 
       // Creating a new object with the extracted data
       const vehicleData = {
-        type: vehicleType,
+        vehicle_type: vehicleType,
         time_stamp: formattedTime,
         direction: eventDirection,
-        matchedLp: matchedLP,
+        matchedLp: matchedLP.trim(),
         dbMatch: dbMatch.toString(), // Convert the array to a string
-        images: images
+        images: images,
+        registered: null,
       };
 
-      console.log(vehicleData);
+      //Check if the vehicle is registered ie present in the vehicles collection
+      const existingVehicles = await Vehicles.findOne({ matchedLp: vehicleData.matchedLp})
+
+      if(!existingVehicles){
+      //Create a new instance of vehicle model and save it to the database
+      const unregistered = new UnregisteredVehicle(vehicleData)
+      await unregistered.save()
+      console.log("\n\nUnregistered Vehicle with vehicle number ", vehicleData.matchedLp, "Stored successfully!");
+      
+      return res.status(200).json({ message: 'Vehicle is Unregistered!' });
+      }
+
+      console.log("\n\nThe Vehicle", vehicleData.matchedLp, "is registered!");
+      return res.status(200).json({ message: "Vehicle is Registered!"});
+
 
       //Create a new instance of the VechicleEvent model and save it to the database
-      const vehicleEvent = new VehicleEvent(vehicleEventData);
-      await vehicleEvent.save();
-
-      //Create a new instance of vehicle model and save it to the database
-      const vehicles = new Vehicles(vehicleData)
-      await vehicles.save()
-
-      res.status(200).json({ message: 'Data stored successfully!' });
+      // const vehicleEvent = new VehicleEvent(vehicleEventData);
+      // await vehicleEvent.save();
+      
     }catch(error){
         console.error(error);
         res.status(202).json({ error: error.toString() });

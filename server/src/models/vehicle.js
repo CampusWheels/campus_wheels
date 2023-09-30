@@ -8,7 +8,7 @@ time_stamp: String,
 direction: String,
 matchedLp: String,
 dbMatch: String,
-images: []
+images: [],
 });
 
 const Vehicles = mongoose.model('vehicles', VehiclesSchema);
