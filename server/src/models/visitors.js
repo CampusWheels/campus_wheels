@@ -14,6 +14,6 @@ registrationDate: String, //The date when the individual registered with the col
 govtId: String //Aadhar number of the person
 });
 
-const visitor = mongoose.model('visitors', VisitorsSchema);
-export default visitor
+const Visitor = mongoose.model('visitors', VisitorsSchema);
+export default Visitor
 
