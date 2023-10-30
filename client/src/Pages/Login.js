@@ -5,20 +5,18 @@ import {Link} from 'react-router-dom'
 export const Login = () => {
     
     //states
-    const [navActive, setNavActive]= useState('Register');
+    const [navActive, setNavActive]= useState('Login');
 
 
     return (
         <>
             <div className='container'>
-                <ul className='nav nav-pills nav-justified mb-3' id="ex1" role="tablist">
+            <div className='row'>
+            <div className='col-4'></div>
+            <ul className='col-4 nav nav-pills nav-justified mb-3' id="ex1" role="tablist">
                     <li className="nav-item" role="presentation">
-                        <a className={`nav-link ${navActive === 'Login'? 'active': ''}`} id="tab-login" data-mdb-toggle="pill" href="#pills-login" role="tab"
+                        <a className={`nav-link bg-black ${navActive === 'Login'? 'active': ''}`} id="tab-login" data-mdb-toggle="pill" href="#pills-login" role="tab"
                             aria-controls="pills-login" aria-selected="true" onClick={()=>{setNavActive('Login')}}>Login</a>
-                    </li>
-                    <li className="nav-item" role="presentation">
-                        <a className={`nav-link ${navActive === 'Register'? 'active': ''}`} id="tab-register" data-mdb-toggle="pill" href="#pills-register" role="tab"
-                            aria-controls="pills-register" aria-selected="false" onClick={()=>{setNavActive('Register')}}>Register</a>
                     </li>
                 </ul>
                 <div className="tab-content">
@@ -70,10 +68,7 @@ export const Login = () => {
                                     </div>
                                 </div>
                                 <div className='text-center'>
-                                    <button type="submit" className="btn btn-primary btn-block mb-4">Sign in</button>
-                                </div>
-                                <div className="text-center">
-                                    <p>Not a member? <Link href="#!" onClick={()=>{setNavActive('Register')}}>Register</Link></p>
+                                    <button type="submit" className="btn btn-primary bg-black border-black btn-block mb-4">Sign in</button>
                                 </div>
                             </form>
                         </div>
@@ -145,6 +140,7 @@ export const Login = () => {
                         </div>
                     }   
                 </div>
+            </div>
             </div>
         </>
     )

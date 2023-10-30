@@ -14,7 +14,8 @@ export const Navbar = () => {
         <div className='col-8 text-center h1'>Campus Wheels</div>
           <ul className='col-4 justify-content-between navbar-nav mb-2 mb-lg-0'>
             <li className='nav-item'><Link to="/" className='nav-link'>Home</Link></li>
-            <li className='nav-item'><Link to="/login" className='nav-link'>Login / Signup</Link></li>
+            <li className='nav-item'><Link to="/regis-reg" className='nav-link'>Vehicle Registration</Link></li>
+            <li className='nav-item'><Link to="/login" className='nav-link'>Sign Out</Link></li>
             <li className='nav-item'><Link to="/admin" className='nav-link'>Administration</Link></li>
           </ul>
         </div>
