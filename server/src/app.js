@@ -5,6 +5,8 @@ import dotenv from 'dotenv'
 import vehicleDetailRoute from './api/routes/vehicleDetailsRoute.js'
 import vehicleRecieveRoute from './api/routes/vehicleRecieveRoute.js'
 import usersDetail from './api/routes/usersDetail.js'
+import register from './api/routes/register.js'
+import login from './api/routes/login.js'
 
 // Load environment variables from .env file
 dotenv.config();
@@ -24,12 +26,18 @@ app.get("/", (req, res) => {
   res.send("Hello, World!"); // Send a simple message as the response
 });
 
+app.use('/api/auth', register);
+
+app.use('/api/auth', login);
+
 app.use('/', usersDetail)
 
 app.use('/', vehicleDetailRoute);
 
 //To recieve Vehicle Event from the python server
 app.use('/', vehicleRecieveRoute);
+
+
 
 // Start the Express server
 app.listen(PORT, () => {
