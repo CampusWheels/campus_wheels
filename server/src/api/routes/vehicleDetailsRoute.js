@@ -24,8 +24,20 @@ router.get('/unregistered-vehicles', async (req, res) => {
         const total_unregistered = await UnregisteredVehicle.countDocuments();
         console.log("Total number of Unregistered Vehicles are:", total_unregistered);
         res.json(unregistered)
-    }catch(error){
+    }catch(error){klmkkk
         res.status(500).json({ message: error.message });
+    }
+});
+
+router.get('/vehicle/:vehicle_number', async (req, res) => {
+    try{
+        const vehicle = await Vehicles.findOne({ matchedLp: req.params.vehicle_number});
+        if(!vehicle){
+            return res.status(404).send();
+        }
+        res.send(vehicle);
+    }catch(error){
+        res.status(500).send(error);
     }
 });
 

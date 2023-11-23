@@ -11,7 +11,7 @@ department: String, //The department or major of the individual (for students, i
 employeeStudentId: String, //A unique identifier for employees or students, respectively.
 phoneNumber: String, //The contact phone number of the individual.
 registrationDate: String, //The date when the individual registered with the college.
-govtId: String, //Aadhar number of the person
+// govtId: String, //Aadhar number of the person
 password: String,
 timeStamp: String,
 });
