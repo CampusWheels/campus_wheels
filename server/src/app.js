@@ -26,9 +26,9 @@ app.get("/", (req, res) => {
   res.send("Hello, World!"); // Send a simple message as the response
 });
 
-app.use('/api/auth', register);
+app.use('/', register);
 
-app.use('/api/auth', login);
+app.use('/', login);
 
 app.use('/', usersDetail)
 

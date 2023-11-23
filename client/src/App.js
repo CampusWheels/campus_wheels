@@ -1,10 +1,11 @@
 
 import './App.css';
+import SignUp from './components/register';
 
 function App() {
   return (
     <div>
-      Hello Niggers!
+      <SignUp/>
     </div>
   );
 }
