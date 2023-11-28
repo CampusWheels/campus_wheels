@@ -1,0 +1,9 @@
+.dashboard_heading{
+    margin: 0;
+    font-family: "Roboto","Helvetica","Arial", "sans-serif";
+    font-weight: 400;
+    align-items: center;
+    text-align: center;
+    line-height: 2.235;
+    letter-spacing: 0.00735em;
+}

@@ -1,0 +1,40 @@
+/* Navbar.css */
+
+.navbar {
+    background-color: #3498db; /* Set your desired background color */
+    color: #fff; /* Set text color */
+    padding: 10px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .navbar-container {
+    width: 80%; /* Adjust as needed */
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .navbar-brand {
+    font-size: 1.5rem;
+  }
+  
+  .navbar-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+  }
+  
+  .navbar-links {
+    display: flex;
+  }
+  
+  .navbar-links a {
+    color: #fff; /* Set link color */
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 1rem;
+  }
+  

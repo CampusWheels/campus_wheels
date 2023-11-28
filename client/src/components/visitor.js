@@ -15,7 +15,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Login from './login';
 import { useState } from 'react';
 import axios from 'axios'
+import Navbar from './navbar/nav';
 import { useNavigate } from 'react-router-dom'
+
 
 function getTimeStamp(){
 
@@ -59,15 +61,15 @@ function Copyright(props) {
   );
 }
 
-const registerUser = async (formData) => {
+const registerVisitor = async (formData) => {
      // Make a POST request to your backend using axios
      try {
-      const response = await axios.post('http://localhost:4000/register', {user: formData});
+      const response = await axios.post('http://localhost:4000/visitor', {visitor: formData});
 
       if (response.status >= 200 && response.status < 300) {
         console.log('Registration successful');
         return 1;
-        // Handle success, e.g., redirect or show a success message
+        
       } else {
         console.error('Registration failed', response.status);
         // Handle failure, e.g., show an error message
@@ -82,18 +84,15 @@ const registerUser = async (formData) => {
 
 const defaultTheme = createTheme();
 
-export default function SignUp() {
+export default function VisitorSignUp() {
 
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     email: '',
-    department: '',
-    empStuId: '',
     vehicle: '',
     phone: '',
   });
-
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
@@ -102,18 +101,18 @@ export default function SignUp() {
     const data = new FormData(event.currentTarget);
     const timestamp = getTimeStamp();
     const date = getCurrentDate();
+    
 
     console.log({
       firstName: data.get('firstName'),
       lastName: data.get('lastName'),
       email: data.get('email'),
       dept: data.get('department'),
-      empStuId: data.get('empStuId'),
       vehicleNo: data.get('vehicle'),
       phoneNumber: data.get('phone'),
       timeStamp: timestamp,
       registrationDate: date,
-      role: "user",
+      role: "visitor",
     });
 
     const updatedFormData = {
@@ -122,33 +121,30 @@ export default function SignUp() {
       lastName: data.get('lastName'),
       email: data.get('email'),
       department: data.get('department'),
-      empStuId: data.get('empStuId'),
       vehicleNo: data.get('vehicle'),
       phoneNumber: data.get('phone'),
       timeStamp: timestamp,
       registrationDate: date,
-      role: "user",
+      role: "visitor",
     }
+    console.log(updatedFormData);
 
     setFormData(updatedFormData);
 
-    const registration = registerUser(formData)
+    const registration = registerVisitor(formData)
     if(!registration){
       console.log("Registration Failed! Try Again!");
     }
     navigate('/');
-
+    
     setFormData({
       firstName: '',
       lastName: '',
       email: '',
-      department: '',
       empStuId: '',
       vehicle: '',
       phone: '',
-    });
-
-
+    }); 
   };
 
 
@@ -218,17 +214,6 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  name="empStuId"
-                  label="EmployeeStudent ID"
-                  type="text"
-                  id="empStuId"
-                  autoComplete="new-ID"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
                   name="vehicle"
                   label="Vehicle Number"
                   type="text"
@@ -254,12 +239,12 @@ export default function SignUp() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Register User!
+              Register Visitor!
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/login" variant="body2">
-                  Sign In for Admin!
+                <Link href="/register" variant="body2">
+                  Registera new User!
                 </Link>
               </Grid>
             </Grid>
